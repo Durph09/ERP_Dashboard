@@ -4,16 +4,27 @@
 
 @layer base {
   :root {
+    /* Global defaults */
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    
+    /* Primary (using Tailwind’s bg-gray-50)
+       Gray-50 is nearly white; here we use 0° 0% 98% as an approximation.
+       The foreground is set to a very dark gray for contrast. */
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    
+    /* Secondary (using Tailwind’s blue-500)
+       Blue-500 is roughly #3B82F6, which converts to about 217° 88% 60%.
+       White text works best on blue, so the foreground is set to nearly white. */
+    --secondary: 217 88% 60%;
+    --secondary-foreground: 0 0% 98%;
+    
+    /* Other values (muted, accent, etc.) can remain as is or be adjusted as needed */
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
     --accent: 0 0% 96.1%;
