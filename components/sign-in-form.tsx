@@ -12,7 +12,7 @@ export default async function SignInForm({
   searchParams: Message;
 }) {
   return (
-    <form className="flex-1 flex flex-col min-w-64 rounded-lg bg-gray-50 px-6 pb-4 pt-8 rounded-lg">
+    <form className="flex-1 flex flex-col min-w-64 bg-gray-50 px-6 pb-4 pt-8 rounded-lg">
      
       <h1 className="text-2xl font-medium">Sign in</h1>
       <p className="text-sm text-foreground">
