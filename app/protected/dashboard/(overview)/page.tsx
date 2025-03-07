@@ -1,38 +1,42 @@
-import FetchDataSteps from "@/components/tutorial/fetch-data-steps";
-import { createClient } from "@/utils/supabase/server";
-import { InfoIcon } from "lucide-react";
-import { redirect } from "next/navigation";
+import CardWrapper from '@/components/ui/dashboard/cards';
+import RevenueChart from '@/components/ui/dashboard/revenue-chart';
+import LatestInvoices from '@/components/ui/dashboard/latest-invoices';
+import { lusitana } from '@/components/ui/fonts';
+import { fetchCardData } from '@/lib/data';
+import { Suspense } from 'react';
+import { LatestInvoicesSkeleton, RevenueChartSkeleton, CardsSkeleton } from '@/components/skeletons';
 
-export default async function ProtectedPage() {
-  const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default async function Page() {
+  //const supabase = createClient()
 
-  if (!user) {
-    return redirect("/sign-in");
-  }
+  // const { data, error } = await supabase.auth.getUser()
+  // console.log('data from layout getUser: ',data)
+  // if (error || !data?.user) {
+  //   redirect('/')
+  // }
 
+  const { totalPaidInvoices, totalPendingInvoices, numberOfInvoices, numberOfCustomers } = await fetchCardData();
   return (
-    <div className="flex-1 w-full flex flex-col gap-12">
-      <div className="w-full">
-        <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
-          <InfoIcon size="16" strokeWidth={2} />
-          This is a protected page that you can only see as an authenticated
-          user
-        </div>
+    <main>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+        Dashboard
+      </h1>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Suspense fallback={<CardsSkeleton />}>
+          <CardWrapper />
+        </Suspense>
+
+
       </div>
-      <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">Your user details</h2>
-        <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
-          {JSON.stringify(user, null, 2)}
-        </pre>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+        <Suspense fallback={<RevenueChartSkeleton />}>
+          <RevenueChart />
+        </Suspense>
+        <Suspense fallback={<LatestInvoicesSkeleton />}>
+          <LatestInvoices />
+        </Suspense>
       </div>
-      <div>
-        <h2 className="font-bold text-2xl mb-4">Next steps</h2>
-        <FetchDataSteps />
-      </div>
-    </div>
+    </main>
   );
 }
