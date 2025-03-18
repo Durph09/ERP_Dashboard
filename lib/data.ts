@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { SupabaseClient } from '@supabase/supabase-js';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 
